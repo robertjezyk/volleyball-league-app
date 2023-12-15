@@ -1,0 +1,98 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model TeamMen {
+  id          String @id @default(uuid())
+  name        String
+  description String?
+  address     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  teamStanding TeamMenStanding?
+}
+
+
+model TeamMenStanding {
+  id              Int      @id @default(autoincrement())
+  teamId          String   @map("_id") @unique
+  points          Int      @default(0)
+  played          Int      @default(0)
+  won             Int      @default(0)
+  lost            Int      @default(0)
+  setsFor         Int      @default(0)
+  setsAgainst     Int      @default(0)
+  pointsFor       Int      @default(0)
+  pointsAgainst   Int      @default(0)
+  team            TeamMen  @relation(fields: [teamId], references: [id])
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@index([teamId], name: "teamMenStanding_teamId_index")
+}
+
+model TeamMixed {
+  id          String @id @default(uuid())
+  name        String
+  description String?
+  address     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  teamStanding TeamMixedStanding?
+}
+
+
+model TeamMixedStanding {
+  id              Int      @id @default(autoincrement())
+  teamId          String   @map("_id") @unique
+  points          Int      @default(0)
+  played          Int      @default(0)
+  won             Int      @default(0)
+  lost            Int      @default(0)
+  setsFor         Int      @default(0)
+  setsAgainst     Int      @default(0)
+  pointsFor       Int      @default(0)
+  pointsAgainst   Int      @default(0)
+  team            TeamMixed  @relation(fields: [teamId], references: [id])
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@index([teamId], name: "teamMixedStanding_teamId_index")
+}
+
+model TeamWomen {
+  id          String @id @default(uuid())
+  name        String
+  description String?
+  address     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  teamStanding TeamWomenStanding?
+}
+
+
+model TeamWomenStanding {
+  id              Int      @id @default(autoincrement())
+  teamId          String   @map("_id") @unique
+  points          Int      @default(0)
+  played          Int      @default(0)
+  won             Int      @default(0)
+  lost            Int      @default(0)
+  setsFor         Int      @default(0)
+  setsAgainst     Int      @default(0)
+  pointsFor       Int      @default(0)
+  pointsAgainst   Int      @default(0)
+  team            TeamWomen  @relation(fields: [teamId], references: [id])
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@index([teamId], name: "teamWomenStanding_teamId_index")
+}
