@@ -4,14 +4,14 @@ export const TableHead = () => {
       <tr>
         <th></th>
         <th>Team</th>
-        <th>PTS</th>
-        <th>P</th>
-        <th>W</th>
-        <th>L</th>
-        <th>SF</th>
-        <th>SA</th>
-        <th>PF</th>
-        <th>PA</th>
+        <th className="points font-bold text-center w-4">PTS</th>
+        <th className="text-center">P</th>
+        <th className="text-center">W</th>
+        <th className="text-center">L</th>
+        <th className="text-center">SF</th>
+        <th className="text-center">SA</th>
+        <th className="text-center">PF</th>
+        <th className="text-center">PA</th>
       </tr>
     </thead>
   );
