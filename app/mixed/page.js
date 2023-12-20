@@ -1,10 +1,11 @@
 import { sortTeams } from "@/utils/sortTeams";
-import { getMixedStandings } from "@/utils/actions";
+import { getStandings } from "@/utils/actions";
 import { TableRow } from "@/components/TableRow";
 import { TableHead } from "@/components/TableHead";
 
 const MixedPage = async () => {
-  const data = await getMixedStandings();
+  const data = await getStandings("mixed")();
+  console.log(data);
   const sortedData = sortTeams(data);
 
   return (

@@ -10,89 +10,44 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model TeamMen {
-  id          String @id @default(uuid())
+model League {
+  id     String @id @default(uuid())
+  type   String @unique
+  season String
+  Team   Team[]
+
+  @@unique([id, type])
+}
+
+model Team {
+  id          String       @id @default(uuid())
   name        String
+  leagueType  String?
   description String?
   address     String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @default(now()) @updatedAt
 
-  teamStanding TeamMenStanding?
+  // Reference to the League model
+  leagueId     String?
+  league       League?       @relation(fields: [leagueId, leagueType], references: [id, type])
+  TeamStanding TeamStanding?
 }
 
 
-model TeamMenStanding {
-  id              Int      @id @default(autoincrement())
-  teamId          String   @map("_id") @unique
-  points          Int      @default(0)
-  played          Int      @default(0)
-  won             Int      @default(0)
-  lost            Int      @default(0)
-  setsFor         Int      @default(0)
-  setsAgainst     Int      @default(0)
-  pointsFor       Int      @default(0)
-  pointsAgainst   Int      @default(0)
-  team            TeamMen  @relation(fields: [teamId], references: [id])
-  updatedAt DateTime @default(now()) @updatedAt
+model TeamStanding {
+  id             Int      @id @default(autoincrement())
+  team           Team     @relation(fields: [teamStandingId], references: [id])
+  points         Int      @default(0)
+  played         Int      @default(0)
+  won            Int      @default(0)
+  lost           Int      @default(0)
+  setsFor        Int      @default(0)
+  setsAgainst    Int      @default(0)
+  pointsFor      Int      @default(0)
+  pointsAgainst  Int      @default(0)
+  teamStandingId String   @unique @map("_teamStandingId")
+  updatedAt      DateTime @default(now()) @updatedAt
 
-  @@index([teamId], name: "teamMenStanding_teamId_index")
-}
-
-model TeamMixed {
-  id          String @id @default(uuid())
-  name        String
-  description String?
-  address     String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-
-  teamStanding TeamMixedStanding?
-}
-
-
-model TeamMixedStanding {
-  id              Int      @id @default(autoincrement())
-  teamId          String   @map("_id") @unique
-  points          Int      @default(0)
-  played          Int      @default(0)
-  won             Int      @default(0)
-  lost            Int      @default(0)
-  setsFor         Int      @default(0)
-  setsAgainst     Int      @default(0)
-  pointsFor       Int      @default(0)
-  pointsAgainst   Int      @default(0)
-  team            TeamMixed  @relation(fields: [teamId], references: [id])
-  updatedAt DateTime @default(now()) @updatedAt
-
-  @@index([teamId], name: "teamMixedStanding_teamId_index")
-}
-
-model TeamWomen {
-  id          String @id @default(uuid())
-  name        String
-  description String?
-  address     String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-
-  teamStanding TeamWomenStanding?
-}
-
-
-model TeamWomenStanding {
-  id              Int      @id @default(autoincrement())
-  teamId          String   @map("_id") @unique
-  points          Int      @default(0)
-  played          Int      @default(0)
-  won             Int      @default(0)
-  lost            Int      @default(0)
-  setsFor         Int      @default(0)
-  setsAgainst     Int      @default(0)
-  pointsFor       Int      @default(0)
-  pointsAgainst   Int      @default(0)
-  team            TeamWomen  @relation(fields: [teamId], references: [id])
-  updatedAt DateTime @default(now()) @updatedAt
-
-  @@index([teamId], name: "teamWomenStanding_teamId_index")
+  @@index([teamStandingId], name: "teamStanding_teamStandingId_index")
 }

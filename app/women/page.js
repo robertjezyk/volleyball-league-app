@@ -1,10 +1,10 @@
 import { sortTeams } from "@/utils/sortTeams";
-import { getWomenStandings } from "@/utils/actions";
+import { getStandings } from "@/utils/actions";
 import { TableRow } from "@/components/TableRow";
 import { TableHead } from "@/components/TableHead";
 
 const WomenPage = async () => {
-  const data = await getWomenStandings();
+  const data = await getStandings("women")();
   const sortedData = sortTeams(data);
 
   return (
