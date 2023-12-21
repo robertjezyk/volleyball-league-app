@@ -3,6 +3,8 @@ import { getStandings } from "@/utils/actions";
 import { TableRow } from "@/components/TableRow";
 import { TableHead } from "@/components/TableHead";
 
+export const dynamic = "force-dynamic";
+
 const WomenPage = async () => {
   const data = await getStandings("women")();
   const sortedData = sortTeams(data);
