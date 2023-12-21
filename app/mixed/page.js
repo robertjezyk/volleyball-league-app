@@ -5,7 +5,6 @@ import { TableHead } from "@/components/TableHead";
 
 const MixedPage = async () => {
   const data = await getStandings("mixed")();
-  console.log(data);
   const sortedData = sortTeams(data);
 
   return (
