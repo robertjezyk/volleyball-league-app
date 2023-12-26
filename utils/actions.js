@@ -2,7 +2,14 @@ import prisma from "@/utils/db";
 
 export const getLeagues = async () => await prisma.league.findMany();
 
-export const getStandingsByLeagueId = (leagueId) => async () =>
+export const getLeague = async (leagueId) =>
+  await prisma.league.findUnique({
+    where: {
+      id: leagueId,
+    },
+  });
+
+export const getLeagueStandings = (leagueId) => async () =>
   await prisma.teamStanding.findMany({
     where: {
       team: {
@@ -21,7 +28,7 @@ export const getStandingsByLeagueId = (leagueId) => async () =>
     },
   });
 
-export const getMatchesForLeague = async (leagueId, teamId) =>
+export const getLeagueMatches = async (leagueId, teamId) =>
   await prisma.match.findMany({
     where: {
       leagueId,
@@ -30,5 +37,14 @@ export const getMatchesForLeague = async (leagueId, teamId) =>
     include: {
       homeTeam: true,
       awayTeam: true,
+    },
+  });
+
+export const getLeagueTeams = async (leagueId) =>
+  await prisma.team.findMany({
+    where: {
+      league: {
+        id: leagueId,
+      },
     },
   });

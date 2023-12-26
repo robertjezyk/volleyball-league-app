@@ -13,7 +13,7 @@ export const Navbar = ({ links }) => {
         </Link>
         <ul className="menu menu-horizontal md:ml-8">
           {links.map((link) => (
-            <li key={link.id} className="mr-2">
+            <li key={link.url} className="mr-2">
               <Link
                 href={link.url}
                 className={`capitalize ${

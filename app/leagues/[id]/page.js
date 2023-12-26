@@ -1,20 +1,29 @@
 import { sortTeams } from "@/utils/sortTeams";
-import { getStandingsByLeagueId, getMatchesForLeague } from "@/utils/actions";
+import {
+  getLeagueStandings,
+  getLeagueMatches,
+  getLeagueTeams,
+  getLeague,
+} from "@/utils/actions";
 import { TableRow } from "@/components/TableRow";
 import { TableHead } from "@/components/TableHead";
-import { Match } from "@/components/Match";
+import { GamesSection } from "@/components/GamesSection";
 
 export const dynamic = "force-dynamic";
 
 const LeaguePage = async ({ params }) => {
-  const standings = await getStandingsByLeagueId(params.id)();
-  const matches = await getMatchesForLeague(params.id);
+  const league = await getLeague(params.id);
+  const standings = await getLeagueStandings(params.id)();
+  const matches = await getLeagueMatches(params.id);
+  const teams = await getLeagueTeams(params.id);
 
   const sortedStandings = sortTeams(standings);
 
   return (
     <>
-      <h2 className="text-4xl mb-8">League Table</h2>
+      <h2 className="text-4xl mb-8 flex justify-between items-center">
+        League Table <kbd className="kbd kbd-lg">{league.season}</kbd>
+      </h2>
       <table className="table">
         <TableHead />
         <tbody>
@@ -23,12 +32,8 @@ const LeaguePage = async ({ params }) => {
           ))}
         </tbody>
       </table>
-      <h2 className="text-4xl mt-24 mb-8">Games ({matches.length})</h2>
-      <ul className="grid gap-4 grid-cols-2">
-        {matches.map((match) => (
-          <Match match={match} key={match.id} />
-        ))}
-      </ul>
+      {/* TODO: Change to server side filtering */}
+      <GamesSection matches={matches} teams={teams} />
     </>
   );
 };
