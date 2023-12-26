@@ -8,11 +8,16 @@ const HomePage = async () => {
     text: league.type,
   }));
 
+  console.log(leagues);
+
   return (
     <>
-      <h1 className="text-5xl mb-8 font-bold">League Teams</h1>
+      <h1 className="text-3xl mb-8 font-bold">
+        Leicestershire Volleyball League
+      </h1>
+
       <Link href={links[0].url} className="btn btn-accent">
-        Get Started
+        {leagues[0].season}
       </Link>
     </>
   );
