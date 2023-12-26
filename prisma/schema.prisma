@@ -19,10 +19,11 @@ datasource db {
 }
 
 model League {
-  id     String @id @default(uuid())
-  type   String @unique
-  season String
-  Team   Team[]
+  id      String @id @default(uuid())
+  type    String @unique
+  season  String
+  Team    Team[]
+  matches Match[]
 
   @@unique([id, type])
 }
@@ -40,6 +41,15 @@ model Team {
   leagueId     String?
   league       League?       @relation(fields: [leagueId, leagueType], references: [id, type])
   TeamStanding TeamStanding?
+
+  // Matches where the team plays as the home team
+  homeMatches  Match[]      @relation("homeMatches")
+  
+  // Matches where the team plays as the away team
+  awayMatches  Match[]      @relation("awayMatches")
+
+  // Add index for the relation fields
+  @@index([leagueId, leagueType], name: "team_league_index")
 }
 
 
@@ -58,4 +68,30 @@ model TeamStanding {
   updatedAt      DateTime @default(now()) @updatedAt
 
   @@index([teamStandingId], name: "teamStanding_teamStandingId_index")
+}
+
+model Match {
+  id         String   @id @default(uuid())
+  date       DateTime @default(now())
+  leagueType String?
+  homeTeamId String
+  awayTeamId String
+  homeTeam   Team     @relation("homeMatches", fields: [homeTeamId], references: [id])
+  awayTeam   Team     @relation("awayMatches", fields: [awayTeamId], references: [id])
+  setsHome   Int
+  setsAway   Int
+  pointsHome Int
+  pointsAway Int
+  leaguePointsHome Int
+  leaguePointsAway Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
+
+  // Reference to the League model
+  leagueId         String
+  league           League?   @relation(fields: [leagueId, leagueType], references: [id, type])
+
+  @@index([homeTeamId], name: "match_homeTeamId_index")
+  @@index([awayTeamId], name: "match_awayTeamId_index")
+  @@index([leagueId, leagueType], name: "match_leagueId_index")
 }
