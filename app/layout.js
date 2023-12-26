@@ -12,10 +12,15 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
   const leagues = await getLeagues();
+  const links = leagues.map((league) => ({
+    url: `/leagues/${league.id}`,
+    text: league.type,
+  }));
+
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navbar links={leagues} />
+        <Navbar links={links} />
         <main className="px-8 py-20 max-w-6xl mx-auto">{children}</main>
       </body>
     </html>

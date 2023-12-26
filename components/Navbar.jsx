@@ -15,12 +15,12 @@ export const Navbar = ({ links }) => {
           {links.map((link) => (
             <li key={link.id} className="mr-2">
               <Link
-                href={`/leagues/${link.id}`}
+                href={link.url}
                 className={`capitalize ${
-                  pathname === `/leagues/${link.id}` ? "active" : ""
+                  pathname === link.url ? "active" : ""
                 }`}
               >
-                {link.type}
+                {link.text}
               </Link>
             </li>
           ))}

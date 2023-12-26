@@ -2,25 +2,6 @@ import prisma from "@/utils/db";
 
 export const getLeagues = async () => await prisma.league.findMany();
 
-export const getStandings = (type) => async () =>
-  await prisma.teamStanding.findMany({
-    where: {
-      team: {
-        league: {
-          type,
-        },
-      },
-    },
-    orderBy: [{ points: "desc" }, { won: "desc" }],
-    include: {
-      team: {
-        select: {
-          name: true,
-        },
-      },
-    },
-  });
-
 export const getStandingsByLeagueId = (leagueId) => async () =>
   await prisma.teamStanding.findMany({
     where: {
@@ -40,10 +21,11 @@ export const getStandingsByLeagueId = (leagueId) => async () =>
     },
   });
 
-export const getMatchesForLeague = async (leagueId) =>
+export const getMatchesForLeague = async (leagueId, teamId) =>
   await prisma.match.findMany({
     where: {
       leagueId,
+      ...(teamId && { OR: [{ homeTeamId: teamId }, { awayTeamId: teamId }] }),
     },
     include: {
       homeTeam: true,

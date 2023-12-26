@@ -23,7 +23,7 @@ const LeaguePage = async ({ params }) => {
           ))}
         </tbody>
       </table>
-      <h2 className="text-4xl mt-24 mb-8">Games</h2>
+      <h2 className="text-4xl mt-24 mb-8">Games ({matches.length})</h2>
       <ul className="grid gap-4 grid-cols-2">
         {matches.map((match) => (
           <Match match={match} key={match.id} />
