@@ -2,7 +2,8 @@ export const TableHead = () => {
   return (
     <thead>
       <tr>
-        <th></th>
+        <th />
+        <th />
         <th>Team</th>
         <th className="points font-bold text-center w-4">Points</th>
         <th className="text-center">Played</th>

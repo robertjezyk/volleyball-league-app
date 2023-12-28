@@ -31,6 +31,7 @@ model League {
 model Team {
   id          String       @id @default(uuid())
   name        String
+  badge       String?
   leagueType  String?
   description String?
   address     String?

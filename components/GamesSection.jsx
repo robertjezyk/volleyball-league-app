@@ -18,8 +18,8 @@ export const GamesSection = ({ matches, teams }) => {
 
   return (
     <>
-      <div className="flex mt-24 mb-8 justify-between items-center">
-        <h2 className="text-4xl">Games ({filteredMatches.length})</h2>
+      <div className="flex mt-16 mb-8 justify-between items-center">
+        <h2 className="text-2xl">Games ({filteredMatches.length})</h2>
         <label className="form-control w-full max-w-xs">
           <div className="label">
             <span className="label-text">Filter games by team</span>

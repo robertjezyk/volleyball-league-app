@@ -21,7 +21,7 @@ const LeaguePage = async ({ params }) => {
 
   return (
     <>
-      <h2 className="text-4xl mb-8 flex justify-between items-center">
+      <h2 className="text-2xl mb-8 flex justify-between items-center">
         League Table <kbd className="kbd kbd-lg">{league.season}</kbd>
       </h2>
       <table className="table">

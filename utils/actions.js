@@ -23,6 +23,7 @@ export const getLeagueStandings = (leagueId) => async () =>
       team: {
         select: {
           name: true,
+          badge: true,
         },
       },
     },
@@ -37,6 +38,9 @@ export const getLeagueMatches = async (leagueId, teamId) =>
     include: {
       homeTeam: true,
       awayTeam: true,
+    },
+    orderBy: {
+      date: "asc",
     },
   });
 

@@ -8,8 +8,6 @@ const HomePage = async () => {
     text: league.type,
   }));
 
-  console.log(leagues);
-
   return (
     <>
       <h1 className="text-3xl mb-8 font-bold">
