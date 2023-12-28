@@ -24,14 +24,16 @@ const LeaguePage = async ({ params }) => {
       <h2 className="text-2xl mb-8 flex justify-between items-center">
         League Table <kbd className="kbd kbd-lg">{league.season}</kbd>
       </h2>
-      <table className="table">
-        <TableHead />
-        <tbody>
-          {sortedStandings.map((team, index) => (
-            <TableRow teamData={team} position={index + 1} key={index} />
-          ))}
-        </tbody>
-      </table>
+      <div className="overflow-x-scroll">
+        <table className="table">
+          <TableHead />
+          <tbody>
+            {sortedStandings.map((team, index) => (
+              <TableRow teamData={team} position={index + 1} key={index} />
+            ))}
+          </tbody>
+        </table>
+      </div>
       {/* TODO: Change to server side filtering */}
       <GamesSection matches={matches} teams={teams} />
     </>

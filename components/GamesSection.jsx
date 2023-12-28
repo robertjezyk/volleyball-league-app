@@ -18,7 +18,7 @@ export const GamesSection = ({ matches, teams }) => {
 
   return (
     <>
-      <div className="flex mt-16 mb-8 justify-between items-center">
+      <div className="flex flex-col gap-4 mt-16 mb-8 justify-between md:items-center md:flex-row">
         <h2 className="text-2xl">Games ({filteredMatches.length})</h2>
         <label className="form-control w-full max-w-xs">
           <div className="label">
@@ -34,7 +34,7 @@ export const GamesSection = ({ matches, teams }) => {
           </select>
         </label>
       </div>
-      <ul className="grid gap-4 grid-cols-2">
+      <ul className="grid gap-4 grid-cols-1 md:grid-cols-2">
         {filteredMatches.map((match) => (
           <Match match={match} key={match.id} />
         ))}
