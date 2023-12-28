@@ -15,8 +15,8 @@ export const TableRow = ({ teamData, position }) => {
   return (
     <tr className="hover">
       <td className="position w-4">{position}</td>
-      <td className="badge h-[45px]">
-        {badge && (
+      <td className="team flex gap-3 pl-0 items-center">
+        {badge ? (
           <Image
             src={badge}
             width={24}
@@ -25,9 +25,11 @@ export const TableRow = ({ teamData, position }) => {
             priority
             alt={`${name} badge`}
           />
+        ) : (
+          <span className="block w-6 h-6" />
         )}
+        {name}
       </td>
-      <td className="team">{name}</td>
       <td className="points font-bold text-center">{points}</td>
       <td className="played text-center">{played}</td>
       <td className="wins text-center">{won}</td>
