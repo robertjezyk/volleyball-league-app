@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { VscWorkspaceUnknown } from "react-icons/vsc";
 
 export const TableRow = ({ teamData, position }) => {
   const {
@@ -26,7 +27,7 @@ export const TableRow = ({ teamData, position }) => {
             alt={`${name} badge`}
           />
         ) : (
-          <span className="block w-6 h-6" />
+          <VscWorkspaceUnknown size={20} className="mr-1" />
         )}
         {name}
       </td>

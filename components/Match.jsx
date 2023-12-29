@@ -1,8 +1,25 @@
 import { format } from "date-fns";
 import Image from "next/image";
+import { VscWorkspaceUnknown } from "react-icons/vsc";
+
+const UnknownBadge = () => (
+  <div className="w-6 h-6 flex justify-center items-center text-slate-500">
+    <VscWorkspaceUnknown size={20} />
+  </div>
+);
+
+const TeamBadge = ({ team }) => (
+  <Image
+    src={team.badge}
+    width={24}
+    height={24}
+    className="w-6 h-6 rounded"
+    priority
+    alt={`${team.name} badge`}
+  />
+);
 
 export const Match = ({ match }) => {
-  const hasOneOfTeamsBadge = match.homeTeam.badge || match.awayTeam.badge;
   const homeTeamWon = match.setsHome > match.setsAway;
   const homeTeamClassName = `flex gap-2 items-center text-lg capitalize ${
     homeTeamWon ? "text-slate-100" : "text-slate-500"
@@ -21,35 +38,19 @@ export const Match = ({ match }) => {
       <div className="flex justify-between gap-2 items-center">
         <div>
           <h3 className={homeTeamClassName}>
-            {hasOneOfTeamsBadge &&
-              (match.homeTeam.badge ? (
-                <Image
-                  src={match.homeTeam.badge}
-                  width={24}
-                  height={24}
-                  className="w-6 h-6 rounded"
-                  priority
-                  alt={`${match.homeTeam.name} badge`}
-                />
-              ) : (
-                <div className="w-6 h-6" />
-              ))}
+            {match.homeTeam.badge ? (
+              <TeamBadge team={match.homeTeam} />
+            ) : (
+              <UnknownBadge />
+            )}
             {match.homeTeam.name}
           </h3>
           <h3 className={awayTeamClassName}>
-            {hasOneOfTeamsBadge &&
-              (match.awayTeam.badge ? (
-                <Image
-                  src={match.awayTeam.badge}
-                  width={24}
-                  height={24}
-                  className="w-6 h-6 rounded"
-                  priority
-                  alt={`${match.awayTeam.name} badge`}
-                />
-              ) : (
-                <div className="w-6 h-6" />
-              ))}
+            {match.awayTeam.badge ? (
+              <TeamBadge team={match.awayTeam} />
+            ) : (
+              <UnknownBadge />
+            )}
             {match.awayTeam.name}
           </h3>
         </div>
