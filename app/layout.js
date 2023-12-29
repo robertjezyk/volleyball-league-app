@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
+import { PHProvider } from "./providers";
 import { Navbar } from "@/components/Navbar";
 import { getLeagues } from "@/utils/actions";
 
@@ -21,12 +22,14 @@ export default async function RootLayout({ children }) {
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={inter.className}>
-          <Navbar links={links} />
-          <main className="px-4 py-6 lg:px-8 lg:py-12 max-w-6xl mx-auto">
-            {children}
-          </main>
-        </body>
+        <PHProvider>
+          <body className={inter.className}>
+            <Navbar links={links} />
+            <main className="px-4 py-6 lg:px-8 lg:py-12 max-w-6xl mx-auto">
+              {children}
+            </main>
+          </body>
+        </PHProvider>
       </html>
     </ClerkProvider>
   );
