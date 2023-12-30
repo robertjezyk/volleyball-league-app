@@ -22,12 +22,12 @@ export const TableRow = ({ teamData, position }) => {
             src={badge}
             width={24}
             height={24}
-            className="w-6 h-6 rounded"
+            className="w-6 h-6 rounded shrink-0"
             priority
             alt={`${name} badge`}
           />
         ) : (
-          <VscWorkspaceUnknown size={20} className="mr-1" />
+          <VscWorkspaceUnknown size={20} className="mr-1 shrink-0" />
         )}
         {name}
       </td>
