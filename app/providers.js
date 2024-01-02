@@ -1,4 +1,5 @@
 "use client";
+import { Toaster } from "react-hot-toast";
 import posthog from "posthog-js";
 import { PostHogProvider } from "posthog-js/react";
 
@@ -8,6 +9,15 @@ if (typeof window !== "undefined") {
   });
 }
 
-export function PHProvider({ children }) {
+export const PHProvider = ({ children }) => {
   return <PostHogProvider client={posthog}>{children}</PostHogProvider>;
-}
+};
+
+export const ToasterProvider = ({ children }) => {
+  return (
+    <>
+      <Toaster />
+      {children}
+    </>
+  );
+};

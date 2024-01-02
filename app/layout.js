@@ -1,7 +1,7 @@
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
-import { PHProvider } from "./providers";
+import { PHProvider, ToasterProvider } from "./providers";
 import { Navbar } from "@/components/Navbar";
 import { getLeagues } from "@/utils/actions";
 
@@ -26,7 +26,7 @@ export default async function RootLayout({ children }) {
           <body className={inter.className}>
             <Navbar links={links} />
             <main className="px-4 py-6 lg:px-8 lg:py-12 max-w-6xl mx-auto">
-              {children}
+              <ToasterProvider>{children}</ToasterProvider>
             </main>
           </body>
         </PHProvider>

@@ -2,6 +2,8 @@ import { format } from "date-fns";
 import Image from "next/image";
 import { VscWorkspaceUnknown } from "react-icons/vsc";
 
+import { DeleteForm } from "@/components/DeleteForm";
+
 const UnknownBadge = () => (
   <div className="w-6 h-6 flex justify-center items-center text-slate-500">
     <VscWorkspaceUnknown size={20} />
@@ -19,7 +21,7 @@ const TeamBadge = ({ team }) => (
   />
 );
 
-export const Match = ({ match }) => {
+export const Match = ({ match, showDeleteButton }) => {
   const homeTeamWon = match.setsHome > match.setsAway;
   const homeTeamClassName = `flex gap-2 items-center text-lg capitalize ${
     homeTeamWon ? "text-slate-100" : "text-slate-500"
@@ -32,8 +34,9 @@ export const Match = ({ match }) => {
 
   return (
     <li className="p-4 border border-base-300 rounded-lg shadow-lg bg-black pr-0">
-      <span className="block text-xs mb-2 text-lime-500">
+      <span className="flex justify-between text-xs mb-2 text-lime-500">
         {format(match.date, "d LLL yy")}
+        {showDeleteButton && <DeleteForm id={match.id} />}
       </span>
       <div className="flex justify-between gap-2 items-center">
         <div>

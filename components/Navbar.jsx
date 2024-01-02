@@ -17,7 +17,7 @@ export const Navbar = ({ links }) => {
               <Link
                 href={link.url}
                 className={`capitalize ${
-                  pathname === link.url ? "active" : ""
+                  pathname.includes(link.url) ? "active" : ""
                 }`}
               >
                 {link.text}

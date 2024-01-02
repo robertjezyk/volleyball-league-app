@@ -1,3 +1,4 @@
+import { auth } from "@clerk/nextjs";
 import { sortTeams } from "@/utils/sortTeams";
 import {
   getLeagueStandings,
@@ -12,6 +13,8 @@ import { GamesSection } from "@/components/GamesSection";
 export const dynamic = "force-dynamic";
 
 const LeaguePage = async ({ params }) => {
+  const { userId } = auth();
+
   const league = await getLeague(params.id);
   const standings = await getLeagueStandings(params.id)();
   const matches = await getLeagueMatches(params.id);
@@ -22,7 +25,7 @@ const LeaguePage = async ({ params }) => {
   return (
     <>
       <h2 className="text-2xl mb-8 flex justify-between items-center">
-        League Table <kbd className="kbd kbd-lg">{league.season}</kbd>
+        League Table <kbd className="kbd kbd-lg">{league?.season}</kbd>
       </h2>
       <div className="overflow-x-scroll">
         <table className="table">
@@ -35,7 +38,7 @@ const LeaguePage = async ({ params }) => {
         </table>
       </div>
       {/* TODO: Change to server side filtering */}
-      <GamesSection matches={matches} teams={teams} />
+      <GamesSection matches={matches} teams={teams} userId={userId} />
     </>
   );
 };
