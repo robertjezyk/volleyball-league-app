@@ -44,7 +44,7 @@ export const getLeagueMatches = async (leagueId, teamId) =>
       awayTeam: true,
     },
     orderBy: {
-      date: "asc",
+      date: "desc",
     },
   });
 
