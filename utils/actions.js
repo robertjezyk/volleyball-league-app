@@ -121,7 +121,7 @@ export const createMatch = async (prevState, formData) => {
     return { message: "success" };
   } catch (error) {
     console.log(error);
-    return { message: error.errors[0]?.message ?? "error" };
+    return { message: "database error. failed to create match" };
   }
 };
 

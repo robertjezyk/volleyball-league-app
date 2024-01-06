@@ -14,7 +14,7 @@ export const TableRow = ({ teamData, position }) => {
     pointsAgainst,
   } = teamData;
   return (
-    <tr className="hover">
+    <tr className="hover border border-slate-700">
       <td className="position w-4">{position}</td>
       <td className="team flex gap-3 pl-0 items-center">
         {badge ? (
@@ -37,8 +37,10 @@ export const TableRow = ({ teamData, position }) => {
       <td className="losses text-center">{lost}</td>
       <td className="sets-for text-center">{setsFor}</td>
       <td className="sets-against text-center">{setsAgainst}</td>
+      <td className="sets-diff text-center">{setsFor - setsAgainst}</td>
       <td className="points-for text-center">{pointsFor}</td>
       <td className="points-against text-center">{pointsAgainst}</td>
+      <td className="points-diff text-center">{pointsFor - pointsAgainst}</td>
     </tr>
   );
 };
