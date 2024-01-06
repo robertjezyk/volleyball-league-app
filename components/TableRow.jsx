@@ -15,8 +15,8 @@ export const TableRow = ({ teamData, position }) => {
   } = teamData;
   return (
     <tr className="hover border border-slate-700">
-      <td className="position w-4">{position}</td>
-      <td className="team flex gap-3 pl-0 items-center">
+      <td className="position w-4 border-r border-slate-700">{position}</td>
+      <td className="team flex gap-3 pl-4 items-center">
         {badge ? (
           <Image
             src={badge}

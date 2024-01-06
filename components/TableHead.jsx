@@ -3,10 +3,7 @@ export const TableHead = () => {
     <thead>
       <tr>
         <th rowSpan={2} className="border border-slate-700" />
-        <th
-          className="pl-[35px] align-bottom border border-slate-700"
-          rowSpan={2}
-        >
+        <th className="pl-4 align-bottom border border-slate-700" rowSpan={2}>
           Team
         </th>
         <th
