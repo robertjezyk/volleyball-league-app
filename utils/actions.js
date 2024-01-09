@@ -13,7 +13,7 @@ export const getLeague = async (leagueId) =>
     },
   });
 
-export const getLeagueStandings = (leagueId) => async () =>
+export const getLeagueStandings = async (leagueId) =>
   await prisma.teamStanding.findMany({
     where: {
       team: {
@@ -26,6 +26,7 @@ export const getLeagueStandings = (leagueId) => async () =>
     include: {
       team: {
         select: {
+          id: true,
           name: true,
           badge: true,
         },
@@ -54,6 +55,13 @@ export const getLeagueTeams = async (leagueId) =>
       league: {
         id: leagueId,
       },
+    },
+  });
+
+export const getTeamById = async (teamId) =>
+  await prisma.team.findUnique({
+    where: {
+      id: teamId,
     },
   });
 

@@ -16,7 +16,7 @@ const LeaguePage = async ({ params }) => {
   const { userId } = auth();
 
   const league = await getLeague(params.id);
-  const standings = await getLeagueStandings(params.id)();
+  const standings = await getLeagueStandings(params.id);
   const matches = await getLeagueMatches(params.id);
   const teams = await getLeagueTeams(params.id);
 

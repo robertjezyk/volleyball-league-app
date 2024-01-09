@@ -1,9 +1,10 @@
 import Image from "next/image";
+import Link from "next/link";
 import { VscWorkspaceUnknown } from "react-icons/vsc";
 
 export const TableRow = ({ teamData, position }) => {
   const {
-    team: { name, badge },
+    team: { name, badge, id },
     points,
     played,
     won,
@@ -29,7 +30,7 @@ export const TableRow = ({ teamData, position }) => {
         ) : (
           <VscWorkspaceUnknown size={20} className="mr-1 shrink-0" />
         )}
-        {name}
+        <Link href={`/teams/${id}`}>{name}</Link>
       </td>
       <td className="points font-bold text-center border-l border-slate-700">
         {points}
