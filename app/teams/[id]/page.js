@@ -29,24 +29,24 @@ const TeamPage = async ({ params }) => {
 
   return (
     <>
-      <div className="flex justify-between items-center">
-        <div className="grow">
-          <h2 className="text-2xl mb-8 flex justify-start items-center">
-            <span className="basis-40">Team:</span>
-            <kbd className="kbd kbd-lg">{name}</kbd>
+      <div className="flex flex-col-reverse md:flex-row justify-between items-center">
+        <div className="grow w-full">
+          <h2 className="text-md md:text-2xl mb-8 flex justify-start items-center">
+            <span className="basis-20 md:basis-40 shrink-0">Team:</span>
+            <kbd className="kbd kbd-md md:kbd-lg">{name}</kbd>
           </h2>
-          <h2 className="text-2xl mb-8 flex justify-start items-center capitalize">
-            <span className="basis-40">League:</span>
-            <kbd className="kbd kbd-lg">{type}</kbd>
+          <h2 className="text-md md:text-2xl mb-8 flex justify-start items-center capitalize">
+            <span className="basis-20 md:basis-40 shrink-0">League:</span>
+            <kbd className="kbd kbd-md md:kbd-lg">{type}</kbd>
           </h2>
           {position && (
-            <h2 className="text-2xl mb-8 flex justify-start items-center">
-              <span className="basis-40">Position:</span>
-              <kbd className="kbd kbd-lg">{position}</kbd>
+            <h2 className="text-md md:text-2xl mb-8 flex justify-start items-center">
+              <span className="basis-20 md:basis-40 shrink-0">Position:</span>
+              <kbd className="kbd kbd-md md:kbd-lg">{position}</kbd>
             </h2>
           )}
-          <h2 className="text-2xl mb-8 flex justify-start items-center">
-            <span className="basis-40">Form:</span>
+          <h2 className="text-md md:text-2xl mb-8 flex justify-start items-center">
+            <span className="basis-20 md:basis-40 shrink-0">Form:</span>
             <div className="inline-flex gap-3">
               {form &&
                 form.map((result, index) => (
@@ -67,16 +67,16 @@ const TeamPage = async ({ params }) => {
             src={badge}
             width={160}
             height={160}
-            className="rounded shrink-0"
+            className="rounded shrink-0 my-4"
             priority
             alt={`${name} badge`}
           />
         ) : (
-          <VscWorkspaceUnknown size={160} className="mr-1 shrink-0" />
+          <VscWorkspaceUnknown size={160} className="mr-1 shrink-0 my-4" />
         )}
       </div>
       <div className="divider mb-10">
-        <h2 className="text-2xl">Matches</h2>
+        <h2 className="text-md md:text-2xl">Matches</h2>
       </div>
       <ul className="grid gap-4 grid-cols-1 md:grid-cols-2">
         {gamesPlayed.map((match) => (
