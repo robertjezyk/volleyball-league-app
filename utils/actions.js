@@ -3,6 +3,7 @@ import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import prisma from "@/utils/db";
 import { calculateLeaguePoints } from "@/utils/calculatePoints";
+import { redirect } from "next/navigation";
 
 export const getLeagues = async () => await prisma.league.findMany();
 
@@ -130,6 +131,8 @@ export const createMatch = async (prevState, formData) => {
   } catch (error) {
     console.log(error);
     return { message: "database error. failed to create match" };
+  } finally {
+    redirect(`/leagues/${leagueId}`);
   }
 };
 
