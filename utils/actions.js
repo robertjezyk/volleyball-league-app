@@ -66,6 +66,54 @@ export const getTeamById = async (teamId) =>
     },
   });
 
+export const getTeamStanding = async (teamStandingId) =>
+  await prisma.teamStanding.findUnique({
+    where: {
+      teamStandingId,
+    },
+    include: {
+      team: {
+        select: {
+          id: true,
+          name: true,
+          leagueId: true,
+        },
+      },
+    },
+  });
+
+export const updateStanding = async (formData) => {
+  const teamId = formData.get("teamId");
+  const leagueId = formData.get("leagueId");
+  const teamStandingId = formData.get("teamStandingId");
+  const points = parseInt(formData.get("points"));
+  const played = parseInt(formData.get("played"));
+  const won = parseInt(formData.get("won"));
+  const lost = parseInt(formData.get("lost"));
+  const setsFor = parseInt(formData.get("setsFor"));
+  const setsAgainst = parseInt(formData.get("setsAgainst"));
+  const pointsFor = parseInt(formData.get("pointsFor"));
+  const pointsAgainst = parseInt(formData.get("pointsAgainst"));
+
+  await prisma.teamStanding.update({
+    where: { teamStandingId },
+    data: {
+      teamStandingId,
+      points,
+      played,
+      won,
+      lost,
+      setsFor,
+      setsAgainst,
+      pointsFor,
+      pointsAgainst,
+    },
+  });
+  revalidatePath(`/leagues/${leagueId}`);
+  revalidatePath(`/teams/${teamId}`);
+  redirect(`/leagues/${leagueId}`);
+};
+
 export const createMatch = async (prevState, formData) => {
   const leagueId = formData.get("leagueId");
   const homeTeamId = formData.get("homeTeamId");
