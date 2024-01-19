@@ -1,5 +1,7 @@
 import Image from "next/image";
+import Link from "next/link";
 import { VscWorkspaceUnknown } from "react-icons/vsc";
+import { auth } from "@clerk/nextjs";
 
 import {
   getLeague,
@@ -13,6 +15,7 @@ import { Match } from "@/components/Match";
 
 const TeamPage = async ({ params }) => {
   const team = await getTeamById(params.id);
+  const { userId } = auth();
 
   if (!team) {
     return "Team doesn't exist";
@@ -22,6 +25,9 @@ const TeamPage = async ({ params }) => {
   const gamesPlayed = await getLeagueMatches(leagueId, params.id);
   const form = calculateForm(params.id, gamesPlayed);
   const standings = await getLeagueStandings(leagueId);
+  const teamStandingId = standings.find(
+    (standing) => standing.team.id === params.id
+  )?.teamStandingId;
   const position =
     sortTeams(standings).findIndex(
       (standing) => standing.team.id === params.id
@@ -83,6 +89,17 @@ const TeamPage = async ({ params }) => {
           <Match match={match} showDeleteButton={false} key={match.id} />
         ))}
       </ul>
+      {userId && teamStandingId && (
+        <>
+          <div className="divider mb-10"></div>
+          <Link
+            href={`/teams/${params.id}/standing/${teamStandingId}`}
+            className="btn btn-accent"
+          >
+            Update Team Standing
+          </Link>
+        </>
+      )}
     </>
   );
 };
