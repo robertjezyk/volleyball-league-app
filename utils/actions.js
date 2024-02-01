@@ -66,7 +66,7 @@ export const getTeamById = async (teamId) =>
     },
   });
 
-export const getTeamStanding = async (teamStandingId) =>
+export const getTeamStandingById = async (teamStandingId) =>
   await prisma.teamStanding.findUnique({
     where: {
       teamStandingId,
@@ -159,6 +159,67 @@ export const createMatch = async (prevState, formData) => {
       pointsAway,
       date,
     });
+
+    await prisma.teamStanding.update({
+      where: { teamStandingId: homeTeamId },
+      data: {
+        points: {
+          increment: calculateLeaguePoints(setsHome),
+        },
+        played: {
+          increment: 1,
+        },
+        won: {
+          increment: setsHome > setsAway ? 1 : 0,
+        },
+        lost: {
+          increment: setsHome < setsAway ? 1 : 0,
+        },
+        setsFor: {
+          increment: setsHome,
+        },
+        setsAgainst: {
+          increment: setsAway,
+        },
+        pointsFor: {
+          increment: pointsHome,
+        },
+        pointsAgainst: {
+          increment: pointsAway,
+        },
+      },
+    });
+
+    await prisma.teamStanding.update({
+      where: { teamStandingId: awayTeamId },
+      data: {
+        points: {
+          increment: calculateLeaguePoints(setsAway),
+        },
+        played: {
+          increment: 1,
+        },
+        won: {
+          increment: setsHome < setsAway ? 1 : 0,
+        },
+        lost: {
+          increment: setsHome > setsAway ? 1 : 0,
+        },
+        setsFor: {
+          increment: setsAway,
+        },
+        setsAgainst: {
+          increment: setsHome,
+        },
+        pointsFor: {
+          increment: pointsAway,
+        },
+        pointsAgainst: {
+          increment: pointsHome,
+        },
+      },
+    });
+
     await prisma.match.create({
       data: {
         date,
@@ -187,10 +248,84 @@ export const createMatch = async (prevState, formData) => {
 export const deleteMatch = async (prevState, formData) => {
   const id = formData.get("id");
 
+  const {
+    homeTeamId,
+    awayTeamId,
+    setsHome,
+    setsAway,
+    pointsHome,
+    pointsAway,
+    // leagueId,
+  } = await prisma.match.findUnique({
+    where: {
+      id,
+    },
+  });
+
   try {
     await prisma.match.delete({
       where: {
         id,
+      },
+    });
+
+    await prisma.teamStanding.update({
+      where: { teamStandingId: homeTeamId },
+      data: {
+        points: {
+          decrement: calculateLeaguePoints(setsHome),
+        },
+        played: {
+          decrement: 1,
+        },
+        won: {
+          decrement: setsHome > setsAway ? 1 : 0,
+        },
+        lost: {
+          decrement: setsHome < setsAway ? 1 : 0,
+        },
+        setsFor: {
+          decrement: setsHome,
+        },
+        setsAgainst: {
+          decrement: setsAway,
+        },
+        pointsFor: {
+          decrement: pointsHome,
+        },
+        pointsAgainst: {
+          decrement: pointsAway,
+        },
+      },
+    });
+
+    await prisma.teamStanding.update({
+      where: { teamStandingId: awayTeamId },
+      data: {
+        points: {
+          decrement: calculateLeaguePoints(setsAway),
+        },
+        played: {
+          decrement: 1,
+        },
+        won: {
+          decrement: setsHome < setsAway ? 1 : 0,
+        },
+        lost: {
+          decrement: setsHome > setsAway ? 1 : 0,
+        },
+        setsFor: {
+          decrement: setsAway,
+        },
+        setsAgainst: {
+          decrement: setsHome,
+        },
+        pointsFor: {
+          decrement: pointsAway,
+        },
+        pointsAgainst: {
+          decrement: pointsHome,
+        },
       },
     });
     revalidatePath("/leagues/[id]", "page");

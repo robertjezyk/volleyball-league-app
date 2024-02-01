@@ -32,6 +32,8 @@ export const CreateMatchForm = ({ leagueId, teams = [] }) => {
   const handleHomeTeamOnChange = (e) => setSelectedHomeTeamId(e.target.value);
   const handleAwayTeamOnChange = (e) => setSelectedAwayTeamId(e.target.value);
 
+  const sortedTeams = teams.sort((a, b) => a.name.localeCompare(b.name));
+
   useEffect(() => {
     if (!state.message) return;
     if (state.message !== "success") {
@@ -87,7 +89,7 @@ export const CreateMatchForm = ({ leagueId, teams = [] }) => {
                 onChange={handleHomeTeamOnChange}
               >
                 <option value="">Select Home team</option>
-                {teams.map((team) => (
+                {sortedTeams.map((team) => (
                   <option
                     value={team.id}
                     key={team.id}
@@ -104,7 +106,7 @@ export const CreateMatchForm = ({ leagueId, teams = [] }) => {
                 onChange={handleAwayTeamOnChange}
               >
                 <option value="">Select Away Team</option>
-                {teams.map((team) => (
+                {sortedTeams.map((team) => (
                   <option
                     value={team.id}
                     key={team.id}

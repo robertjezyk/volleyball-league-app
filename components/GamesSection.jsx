@@ -32,11 +32,13 @@ export const GamesSection = ({ matches, teams, userId }) => {
               onChange={handleOnChange}
             >
               <option value="">All teams</option>
-              {teams.map((team) => (
-                <option value={team.id} key={team.id}>
-                  {team.name}
-                </option>
-              ))}
+              {teams
+                .sort((a, b) => a.name.localeCompare(b.name))
+                .map((team) => (
+                  <option value={team.id} key={team.id}>
+                    {team.name}
+                  </option>
+                ))}
             </select>
           </label>
         </span>

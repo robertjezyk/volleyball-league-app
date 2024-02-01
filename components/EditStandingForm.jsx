@@ -1,10 +1,10 @@
 import Link from "next/link";
 
-import { getTeamStanding, updateStanding } from "@/utils/actions";
+import { getTeamStandingById, updateStanding } from "@/utils/actions";
 import { IoArrowBackOutline } from "react-icons/io5";
 
 export const EditStandingForm = async ({ teamStandingId, teamId }) => {
-  const standing = await getTeamStanding(teamStandingId);
+  const standing = await getTeamStandingById(teamStandingId);
 
   return (
     <div className="flex flex-col">
