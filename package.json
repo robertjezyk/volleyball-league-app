@@ -13,6 +13,7 @@
     "@prisma/client": "^5.7.1",
     "@tailwindcss/typography": "^0.5.10",
     "date-fns": "^3.0.6",
+    "lodash": "^4.17.21",
     "next": "14.0.4",
     "posthog-js": "^1.96.1",
     "posthog-node": "^3.2.1",

@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import prisma from "@/utils/db";
 import { calculateLeaguePoints } from "@/utils/calculatePoints";
 import { redirect } from "next/navigation";
+import { differenceWith, isEqual } from "lodash";
 
 export const getLeagues = async () => await prisma.league.findMany();
 
@@ -334,4 +335,58 @@ export const deleteMatch = async (prevState, formData) => {
     console.log(error);
     return { message: "error" };
   }
+};
+
+export const getRemainingLeagueMatches = async (leagueId, teamId, teamName) => {
+  // Fetch opponents in the league
+  const opponentTeams = await prisma.team.findMany({
+    where: {
+      leagueId,
+      id: {
+        not: teamId,
+      },
+    },
+  });
+
+  const possibleMatches = opponentTeams.flatMap((opponent) => [
+    {
+      homeTeam: { id: teamId, name: teamName },
+      awayTeam: { id: opponent.id, name: opponent.name },
+    },
+    {
+      homeTeam: { id: opponent.id, name: opponent.name },
+      awayTeam: { id: teamId, name: teamName },
+    },
+  ]);
+
+  // Fetch all team's matches
+  const teamMatches = await prisma.match.findMany({
+    where: {
+      leagueId,
+      OR: [{ homeTeamId: teamId }, { awayTeamId: teamId }],
+    },
+    include: {
+      homeTeam: true,
+      awayTeam: true,
+    },
+  });
+
+  const playedMatches = teamMatches.map((match) => ({
+    homeTeam: {
+      id: match.homeTeamId,
+      name: match.homeTeam.name,
+    },
+    awayTeam: {
+      id: match.awayTeamId,
+      name: match.awayTeam.name,
+    },
+  }));
+
+  const remainingMatches = differenceWith(
+    possibleMatches,
+    playedMatches,
+    isEqual
+  );
+
+  return remainingMatches;
 };

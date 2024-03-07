@@ -6,12 +6,14 @@ import { auth } from "@clerk/nextjs";
 import {
   getLeague,
   getLeagueMatches,
+  getRemainingLeagueMatches,
   getTeamById,
   getLeagueStandings,
 } from "@/utils/actions";
 import { calculateForm } from "@/utils/calculateForm";
 import { sortTeams } from "@/utils/sortTeams";
 import { Match } from "@/components/Match";
+import { MatchTile } from "@/components/MatchTile";
 
 const TeamPage = async ({ params }) => {
   const team = await getTeamById(params.id);
@@ -32,6 +34,14 @@ const TeamPage = async ({ params }) => {
     sortTeams(standings).findIndex(
       (standing) => standing.team.id === params.id
     ) + 1;
+
+  const remainingGames = await getRemainingLeagueMatches(
+    leagueId,
+    params.id,
+    name
+  );
+
+  console.log(remainingGames);
 
   return (
     <>
@@ -89,6 +99,16 @@ const TeamPage = async ({ params }) => {
           <Match match={match} showDeleteButton={false} key={match.id} />
         ))}
       </ul>
+
+      <div className="divider my-10">
+        <h2 className="text-md md:text-2xl">Remaining games</h2>
+      </div>
+      <ul className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+        {remainingGames.map((match, index) => (
+          <MatchTile match={match} teamId={params.id} key={index} />
+        ))}
+      </ul>
+
       {userId && teamStandingId && (
         <>
           <div className="divider mb-10"></div>
