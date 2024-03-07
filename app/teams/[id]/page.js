@@ -41,8 +41,6 @@ const TeamPage = async ({ params }) => {
     name
   );
 
-  console.log(remainingGames);
-
   return (
     <>
       <div className="flex flex-col-reverse md:flex-row justify-between items-center">
