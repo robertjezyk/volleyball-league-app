@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { VscWorkspaceUnknown } from "react-icons/vsc";
+import { IoArrowBackOutline } from "react-icons/io5";
 import { auth } from "@clerk/nextjs";
 
 import {
@@ -43,34 +44,44 @@ const TeamPage = async ({ params }) => {
 
   return (
     <>
+      <Link
+        className="btn btn-square btn-accent btn-outline mb-8"
+        href={`/leagues/${leagueId}`}
+      >
+        <IoArrowBackOutline />
+      </Link>
       <div className="flex flex-col-reverse md:flex-row justify-between items-center">
         <div className="grow w-full">
-          <h2 className="text-md md:text-2xl mb-8 flex justify-start items-center">
-            <span className="basis-20 md:basis-40 shrink-0">Team:</span>
-            <kbd className="kbd kbd-md md:kbd-lg">{name}</kbd>
+          <h2 className="text-md md:text-xl mb-8 flex justify-start items-center">
+            <span className="basis-20 md:basis-32 shrink-0">Team:</span>
+            <kbd className="kbd kbd-md md:kbd-md">{name}</kbd>
           </h2>
-          <h2 className="text-md md:text-2xl mb-8 flex justify-start items-center capitalize">
-            <span className="basis-20 md:basis-40 shrink-0">League:</span>
-            <kbd className="kbd kbd-md md:kbd-lg">{type}</kbd>
+          <h2 className="text-md md:text-xl mb-8 flex justify-start items-center capitalize">
+            <span className="basis-20 md:basis-32 shrink-0">League:</span>
+            <Link href={`/leagues/${leagueId}`}>
+              <kbd className="kbd kbd-md md:kbd-md text-sky-400/75 hover:text-sky-400/100">
+                {type}
+              </kbd>
+            </Link>
           </h2>
           {position && (
-            <h2 className="text-md md:text-2xl mb-8 flex justify-start items-center">
-              <span className="basis-20 md:basis-40 shrink-0">Position:</span>
-              <kbd className="kbd kbd-md md:kbd-lg">{position}</kbd>
+            <h2 className="text-md md:text-xl mb-8 flex justify-start items-center">
+              <span className="basis-20 md:basis-32 shrink-0">Position:</span>
+              <kbd className="kbd kbd-md md:kbd-md">{position}</kbd>
             </h2>
           )}
-          <h2 className="text-md md:text-2xl mb-8 flex justify-start items-center">
-            <span className="basis-20 md:basis-40 shrink-0">Form:</span>
+          <h2 className="text-md md:text-xl mb-8 flex justify-start items-center">
+            <span className="basis-20 md:basis-32 shrink-0">Form:</span>
             <div className="inline-flex gap-3">
               {form &&
-                form.map((result, index) => (
+                form.map(({ id, outcome, setScore, pointScore }) => (
                   <span
-                    key={index}
+                    key={id}
                     className={`flex justify-center items-center w-8 h-8 rounded-full text-base text-white ${
-                      result === "W" ? "bg-lime-500" : "bg-rose-600"
+                      outcome === "W" ? "bg-lime-500" : "bg-rose-600"
                     }`}
                   >
-                    {result}
+                    {outcome}
                   </span>
                 ))}
             </div>
